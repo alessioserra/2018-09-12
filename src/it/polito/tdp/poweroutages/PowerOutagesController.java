@@ -46,6 +46,8 @@ public class PowerOutagesController {
     @FXML
     void doCreaGrafo(ActionEvent event) {
 
+    	model.creaGrafo();
+    	
     }
 
     @FXML
