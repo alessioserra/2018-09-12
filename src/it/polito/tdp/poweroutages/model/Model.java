@@ -1,6 +1,9 @@
 package it.polito.tdp.poweroutages.model;
 
 import java.awt.Point;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +27,10 @@ public class Model {
 		idMap = new HashMap<>();
 		dao = new PowerOutagesDAO();
 		nercs = dao.loadAllNercs(idMap);
+	}
+	
+	public List<Nerc> getNercs(){
+		return this.nercs;
 	}
 	
 	public void creaGrafo() {
@@ -56,6 +63,28 @@ public class Model {
 		System.out.println("GRAFO CREATO");
 		System.out.println("#NODI: "+this.grafo.vertexSet().size());
 		System.out.println("#ARCHI: "+this.grafo.edgeSet().size());
+	}
+	
+	public List<Vicini> getVicini(Nerc n){
+		
+		List<Nerc> vicini = new ArrayList<>();
+		List<Vicini> result = new ArrayList<>();
+		
+		vicini = Graphs.neighborListOf(this.grafo, n);
+		
+		for (Nerc nerc : vicini) {
+			
+		   double peso = grafo.getEdgeWeight(grafo.getEdge(n, nerc));
+		   
+		   Vicini v = new Vicini(nerc, peso);
+		   
+		   result.add(v);
+		   	
+		}
+		
+		Collections.sort(result);
+		
+		return result;
 	}
 
 }
